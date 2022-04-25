@@ -78,12 +78,6 @@ const GameGrid = () => {
     return () => clearInterval(interval);
   }, [isStarted]);
 
-  const handleGameState = (state: boolean) => {
-    return (event: React.MouseEvent<HTMLButtonElement>) => {
-      setIsStarted(state);
-    };
-  };
-
   const handleCellClick = (x: number, y: number) => {
     return (event: React.MouseEvent<HTMLDivElement>) => {
       setCells((prevCells) => {
@@ -94,14 +88,18 @@ const GameGrid = () => {
     };
   };
 
+  const clearGrid = () => {
+    setCells(initialCells);
+  };
+
   return (
     <div className="grid-container">
       <div className="row">
-        <button className="btn-primary" onClick={handleGameState(true)}>
-          Start
-        </button>
-        <button className="btn-danger" onClick={handleGameState(false)}>
-          Stop
+        <button
+          className={isStarted ? 'btn-danger' : 'btn-primary'}
+          onClick={() => setIsStarted((prev) => !prev)}
+        >
+          {isStarted ? 'Stop' : 'Start'}
         </button>
       </div>
       <div className="row">
@@ -110,6 +108,11 @@ const GameGrid = () => {
           onClick={() => setIsGridDisplayed((prev) => !prev)}
         >
           {isGridDisplayed ? 'Hide grid' : 'Show grid'}
+        </button>
+      </div>
+      <div className="row">
+        <button className="btn-danger" onClick={clearGrid}>
+          Clear grid
         </button>
       </div>
       {cells.map((row, rowIndex) => (
