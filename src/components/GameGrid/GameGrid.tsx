@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import './GameGrid.css';
 
-const initialCells: boolean[][] = Array.from({ length: 10 }, () =>
-  Array.from({ length: 10 }, () => false)
+const initialCells: boolean[][] = Array.from({ length: 50 }, () =>
+  Array.from({ length: 50 }, () => Math.random() > 0.5)
 );
 
-initialCells[1][1] = true;
-initialCells[1][2] = true;
-initialCells[1][3] = true;
-
-initialCells[5][1] = true;
-initialCells[5][2] = true;
-initialCells[6][1] = true;
-initialCells[6][2] = true;
+// glider
+// initialCells[2][1] = true;
+// initialCells[3][2] = true;
+// initialCells[3][3] = true;
+// initialCells[2][3] = true;
+// initialCells[1][3] = true;
 
 const getLivingNeighboursCount = (
   cells: boolean[][],
@@ -51,7 +49,8 @@ const shouldBeAliveInNextGeneration = (
 
 const generateNewCells = (cells: boolean[][]): boolean[][] => {
   console.log('generateNewCells');
-  const newCells = [...cells];
+  const newCells = JSON.parse(JSON.stringify(cells));
+
   for (let i = 0; i < cells.length; i++) {
     for (let j = 0; j < cells[i].length; j++) {
       const livingNeighboursCount = getLivingNeighboursCount(cells, i, j);
@@ -68,12 +67,12 @@ const GameGrid = () => {
   const [cells, setCells] = useState<boolean[][]>(initialCells);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const timeout = setTimeout(() => {
       const newCells = generateNewCells(cells);
       setCells(newCells);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+    }, 100);
+    return () => clearTimeout(timeout);
+  }, [cells]);
 
   return (
     <div className="grid-container">
