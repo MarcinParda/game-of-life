@@ -11,6 +11,7 @@
   background-color: #000;
   margin: 0.125rem;
   transition: opacity 0.1s ease;
+  border-radius: 50%;
 }
 
 .dead-cell {
@@ -18,4 +19,5 @@
   height: 1rem;
   border: 1px solid #000;
   margin: 0.125rem;
+  border-radius: 50%;
 }
