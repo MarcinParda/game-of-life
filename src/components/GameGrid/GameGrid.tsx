@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './GameGrid.css';
 
 const initialCells: boolean[][] = Array.from({ length: 50 }, () =>
-  Array.from({ length: 50 }, () => Math.random() > 0.5)
+  Array.from({ length: 50 }, () => false)
 );
 
 // glider
@@ -67,12 +67,11 @@ const GameGrid = () => {
   const [cells, setCells] = useState<boolean[][]>(initialCells);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      const newCells = generateNewCells(cells);
-      setCells(newCells);
+    const interval = setInterval(() => {
+      setCells((prevCells) => generateNewCells(prevCells));
     }, 100);
-    return () => clearTimeout(timeout);
-  }, [cells]);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="grid-container">
