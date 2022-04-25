@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './GameGrid.css';
 
-const initialCells: boolean[][] = Array.from({ length: 10 }, () =>
+const initialGrid: boolean[][] = Array.from({ length: 10 }, () =>
   Array.from({ length: 10 }, () => false)
 );
 
@@ -64,9 +64,11 @@ const randomColor = () => {
 };
 
 const GameGrid = () => {
-  const [cells, setCells] = useState<boolean[][]>(initialCells);
+  const [cells, setCells] = useState<boolean[][]>(initialGrid);
   const [isStarted, setIsStarted] = useState(false);
   const [isGridDisplayed, setIsGridDisplayed] = useState(true);
+  const [gridWidth, setGridWidth] = useState(10);
+  const [gridHeight, setGridHeight] = useState(10);
 
   useEffect(() => {
     if (!isStarted) {
@@ -88,8 +90,16 @@ const GameGrid = () => {
     };
   };
 
+  const handleChangeGridSize = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const newGrid: boolean[][] = Array.from({ length: gridWidth }, () =>
+      Array.from({ length: gridHeight }, () => false)
+    );
+    setCells(newGrid);
+  };
+
   const clearGrid = () => {
-    setCells(initialCells);
+    setCells(initialGrid);
   };
 
   return (
@@ -115,6 +125,35 @@ const GameGrid = () => {
           Clear grid
         </button>
       </div>
+      <form className="row" onSubmit={(e) => handleChangeGridSize(e)}>
+        <div className="column">
+          <label className="label" htmlFor="width">
+            Grid width
+          </label>
+          <input
+            className="input"
+            value={gridWidth}
+            onChange={(event) => setGridWidth(Number(event.target.value))}
+            name="width"
+            type="number"
+          />
+        </div>
+        <div className="column">
+          <label className="label" htmlFor="width">
+            Grid height
+          </label>
+          <input
+            className="input"
+            value={gridHeight}
+            onChange={(event) => setGridHeight(Number(event.target.value))}
+            name="width"
+            type="number"
+          />
+        </div>
+        <button className="btn-primary" type="submit">
+          Change grid size
+        </button>
+      </form>
       {cells.map((row, rowIndex) => (
         <div className="row" key={rowIndex}>
           {row.map((cell, cellIndex) => (
