@@ -57,9 +57,9 @@ const generateNewCells = (cells: boolean[][]): boolean[][] => {
 };
 
 const randomColor = () => {
-  const r = Math.floor(Math.random() * 156);
-  const g = Math.floor(Math.random() * 156);
-  const b = 0;
+  const r = Math.floor(Math.random() * 50);
+  const g = Math.floor(Math.random() * 50) + 156;
+  const b = Math.floor(Math.random() * 50);
   return `rgb(${r}, ${g}, ${b})`;
 };
 
