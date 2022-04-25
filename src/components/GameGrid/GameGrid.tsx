@@ -6,11 +6,11 @@ const initialCells: boolean[][] = Array.from({ length: 50 }, () =>
 );
 
 // glider
-// initialCells[2][1] = true;
-// initialCells[3][2] = true;
-// initialCells[3][3] = true;
-// initialCells[2][3] = true;
-// initialCells[1][3] = true;
+initialCells[2][1] = true;
+initialCells[3][2] = true;
+initialCells[3][3] = true;
+initialCells[2][3] = true;
+initialCells[1][3] = true;
 
 const getLivingNeighboursCount = (
   cells: boolean[][],
@@ -77,23 +77,19 @@ const GameGrid = () => {
     return () => clearInterval(interval);
   }, [isStarted]);
 
+  const handleGameState = (state: boolean) => {
+    return (event: React.MouseEvent<HTMLButtonElement>) => {
+      setIsStarted(state);
+    };
+  };
+
   return (
     <div className="grid-container">
       <div className="row">
-        <button
-          className="btn-primary"
-          onClick={() => {
-            setIsStarted(true);
-          }}
-        >
+        <button className="btn-primary" onClick={handleGameState(true)}>
           Start
         </button>
-        <button
-          className="btn-danger"
-          onClick={() => {
-            setIsStarted(false);
-          }}
-        >
+        <button className="btn-danger" onClick={handleGameState(false)}>
           Stop
         </button>
       </div>
