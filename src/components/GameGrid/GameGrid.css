@@ -14,6 +14,7 @@
   border: 1px solid #000;
   background-color: #000;
   margin: 0.125rem;
+  transition: opacity 0.1s ease;
 }
 
 .dead-cell {

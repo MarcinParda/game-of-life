@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './GameGrid.css';
 
-const initialCells: boolean[][] = Array.from({ length: 50 }, () =>
-  Array.from({ length: 50 }, () => false)
+const initialCells: boolean[][] = Array.from({ length: 100 }, () =>
+  Array.from({ length: 100 }, () => false)
 );
 
 // glider
@@ -64,9 +64,9 @@ const generateNewCells = (cells: boolean[][]): boolean[][] => {
 };
 
 const randomColor = () => {
-  const r = Math.floor(Math.random() * 256);
-  const g = Math.floor(Math.random() * 256);
-  const b = Math.floor(Math.random() * 256);
+  const r = Math.floor(Math.random() * 156);
+  const g = Math.floor(Math.random() * 156);
+  const b = 0;
   return `rgb(${r}, ${g}, ${b})`;
 };
 
@@ -115,7 +115,7 @@ const GameGrid = () => {
           {row.map((cell, cellIndex) => (
             <div
               className={cell ? 'living-cell' : 'dead-cell'}
-              style={{ backgroundColor: randomColor() }}
+              style={{ backgroundColor: cell ? randomColor() : '#fff' }}
               key={cellIndex}
               onClick={handleCellClick(rowIndex, cellIndex)}
             />
