@@ -9,6 +9,11 @@ initialCells[1][1] = true;
 initialCells[1][2] = true;
 initialCells[1][3] = true;
 
+initialCells[5][1] = true;
+initialCells[5][2] = true;
+initialCells[6][1] = true;
+initialCells[6][2] = true;
+
 const getLivingNeighboursCount = (
   cells: boolean[][],
   i: number,
@@ -33,12 +38,27 @@ const getLivingNeighboursCount = (
   return count;
 };
 
+const shouldBeAliveInNextGeneration = (
+  cell: boolean,
+  neighborsCount: number
+): boolean => {
+  if (cell) {
+    return neighborsCount === 2 || neighborsCount === 3;
+  } else {
+    return neighborsCount === 3;
+  }
+};
+
 const generateNewCells = (cells: boolean[][]): boolean[][] => {
   console.log('generateNewCells');
   const newCells = [...cells];
   for (let i = 0; i < cells.length; i++) {
     for (let j = 0; j < cells[i].length; j++) {
       const livingNeighboursCount = getLivingNeighboursCount(cells, i, j);
+      newCells[i][j] = shouldBeAliveInNextGeneration(
+        cells[i][j],
+        livingNeighboursCount
+      );
     }
   }
   return newCells;
@@ -51,7 +71,7 @@ const GameGrid = () => {
     const interval = setInterval(() => {
       const newCells = generateNewCells(cells);
       setCells(newCells);
-    }, 100);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
