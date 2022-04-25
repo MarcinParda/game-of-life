@@ -99,7 +99,11 @@ const GameGrid = () => {
   };
 
   const clearGrid = () => {
-    setCells(initialGrid);
+    setCells((prevCells) =>
+      Array.from({ length: prevCells.length }, () =>
+        Array.from({ length: prevCells[0].length }, () => false)
+      )
+    );
   };
 
   return (
