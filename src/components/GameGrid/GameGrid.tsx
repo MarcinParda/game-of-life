@@ -6,11 +6,11 @@ const initialCells: boolean[][] = Array.from({ length: 50 }, () =>
 );
 
 // glider
-initialCells[2][1] = true;
-initialCells[3][2] = true;
-initialCells[3][3] = true;
-initialCells[2][3] = true;
-initialCells[1][3] = true;
+// initialCells[2][1] = true;
+// initialCells[3][2] = true;
+// initialCells[3][3] = true;
+// initialCells[2][3] = true;
+// initialCells[1][3] = true;
 
 const getLivingNeighboursCount = (
   cells: boolean[][],
@@ -63,6 +63,13 @@ const generateNewCells = (cells: boolean[][]): boolean[][] => {
   return newCells;
 };
 
+const randomColor = () => {
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+  return `rgb(${r}, ${g}, ${b})`;
+};
+
 const GameGrid = () => {
   const [cells, setCells] = useState<boolean[][]>(initialCells);
   const [isStarted, setIsStarted] = useState(false);
@@ -83,6 +90,16 @@ const GameGrid = () => {
     };
   };
 
+  const handleCellClick = (x: number, y: number) => {
+    return (event: React.MouseEvent<HTMLDivElement>) => {
+      setCells((prevCells) => {
+        const newCells = JSON.parse(JSON.stringify(prevCells));
+        newCells[x][y] = !newCells[x][y];
+        return newCells;
+      });
+    };
+  };
+
   return (
     <div className="grid-container">
       <div className="row">
@@ -93,10 +110,15 @@ const GameGrid = () => {
           Stop
         </button>
       </div>
-      {cells.map((row, index) => (
-        <div className="row" key={index}>
-          {row.map((cell, index) => (
-            <div className={cell ? 'living-cell' : 'dead-cell'} key={index} />
+      {cells.map((row, rowIndex) => (
+        <div className="row" key={rowIndex}>
+          {row.map((cell, cellIndex) => (
+            <div
+              className={cell ? 'living-cell' : 'dead-cell'}
+              style={{ backgroundColor: randomColor() }}
+              key={cellIndex}
+              onClick={handleCellClick(rowIndex, cellIndex)}
+            />
           ))}
         </div>
       ))}
