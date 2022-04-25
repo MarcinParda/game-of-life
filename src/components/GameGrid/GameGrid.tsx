@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './GameGrid.css';
 
-const initialCells: boolean[][] = Array.from({ length: 100 }, () =>
-  Array.from({ length: 100 }, () => false)
+const initialCells: boolean[][] = Array.from({ length: 10 }, () =>
+  Array.from({ length: 10 }, () => false)
 );
-
-// glider
-// initialCells[2][1] = true;
-// initialCells[3][2] = true;
-// initialCells[3][3] = true;
-// initialCells[2][3] = true;
-// initialCells[1][3] = true;
 
 const getLivingNeighboursCount = (
   cells: boolean[][],
@@ -73,6 +66,7 @@ const randomColor = () => {
 const GameGrid = () => {
   const [cells, setCells] = useState<boolean[][]>(initialCells);
   const [isStarted, setIsStarted] = useState(false);
+  const [isGridDisplayed, setIsGridDisplayed] = useState(true);
 
   useEffect(() => {
     if (!isStarted) {
@@ -110,12 +104,23 @@ const GameGrid = () => {
           Stop
         </button>
       </div>
+      <div className="row">
+        <button
+          className={isGridDisplayed ? 'btn-danger' : 'btn-primary'}
+          onClick={() => setIsGridDisplayed((prev) => !prev)}
+        >
+          {isGridDisplayed ? 'Hide grid' : 'Show grid'}
+        </button>
+      </div>
       {cells.map((row, rowIndex) => (
         <div className="row" key={rowIndex}>
           {row.map((cell, cellIndex) => (
             <div
               className={cell ? 'living-cell' : 'dead-cell'}
-              style={{ backgroundColor: cell ? randomColor() : '#fff' }}
+              style={{
+                backgroundColor: cell ? randomColor() : '#fff',
+                opacity: isGridDisplayed || cell ? 1 : 0,
+              }}
               key={cellIndex}
               onClick={handleCellClick(rowIndex, cellIndex)}
             />
