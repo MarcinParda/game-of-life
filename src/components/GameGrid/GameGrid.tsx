@@ -15,18 +15,18 @@ const getLivingNeighboursCount = (
   j: number
 ): number => {
   let count = 0;
-  let x = i - 1;
-  let y = j - 1;
 
-  if (x < 0) x = 0;
-
-  for (x; x < i + 2; x++) {
-    y = j - 1;
-    if (y < 0) y = 0;
-    if (x >= cells.length) break;
-    for (y; y < j + 2; y++) {
-      if (y >= cells[0].length) break;
-      if (cells[x][y] && (x !== i || y !== j)) count++;
+  for (let x = i - 1; x <= i + 1; x++) {
+    for (let y = j - 1; y <= j + 1; y++) {
+      if (x === i && y === j) {
+        continue;
+      }
+      if (x < 0 || x >= cells.length || y < 0 || y >= cells[0].length) {
+        continue;
+      }
+      if (cells[x][y]) {
+        count++;
+      }
     }
   }
 
@@ -34,6 +34,7 @@ const getLivingNeighboursCount = (
 };
 
 const generateNewCells = (cells: boolean[][]): boolean[][] => {
+  console.log('generateNewCells');
   const newCells = [...cells];
   for (let i = 0; i < cells.length; i++) {
     for (let j = 0; j < cells[i].length; j++) {
