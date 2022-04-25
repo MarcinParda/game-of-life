@@ -65,16 +65,38 @@ const generateNewCells = (cells: boolean[][]): boolean[][] => {
 
 const GameGrid = () => {
   const [cells, setCells] = useState<boolean[][]>(initialCells);
+  const [isStarted, setIsStarted] = useState(false);
 
   useEffect(() => {
+    if (!isStarted) {
+      return;
+    }
     const interval = setInterval(() => {
       setCells((prevCells) => generateNewCells(prevCells));
     }, 100);
     return () => clearInterval(interval);
-  }, []);
+  }, [isStarted]);
 
   return (
     <div className="grid-container">
+      <div className="row">
+        <button
+          className="btn-primary"
+          onClick={() => {
+            setIsStarted(true);
+          }}
+        >
+          Start
+        </button>
+        <button
+          className="btn-danger"
+          onClick={() => {
+            setIsStarted(false);
+          }}
+        >
+          Stop
+        </button>
+      </div>
       {cells.map((row, index) => (
         <div className="row" key={index}>
           {row.map((cell, index) => (
