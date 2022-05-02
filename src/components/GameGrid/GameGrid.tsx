@@ -108,56 +108,54 @@ const GameGrid = () => {
 
   return (
     <div className="grid-container">
-      <div className="row">
-        <button
-          className={isStarted ? 'btn-danger' : 'btn-primary'}
-          onClick={() => setIsStarted((prev) => !prev)}
-        >
-          {isStarted ? 'Stop' : 'Start'}
-        </button>
-      </div>
-      <div className="row">
+      <div className="row mb-2">
         <button
           className={isGridDisplayed ? 'btn-danger' : 'btn-primary'}
           onClick={() => setIsGridDisplayed((prev) => !prev)}
         >
           {isGridDisplayed ? 'Hide grid' : 'Show grid'}
         </button>
-      </div>
-      <div className="row">
+        <button
+          className={isStarted ? 'btn-danger' : 'btn-primary'}
+          onClick={() => setIsStarted((prev) => !prev)}
+        >
+          {isStarted ? 'Stop' : 'Start'}
+        </button>
         <button className="btn-danger" onClick={clearGrid}>
           Clear grid
         </button>
       </div>
-      <form className="row" onSubmit={(e) => handleChangeGridSize(e)}>
-        <div className="column">
-          <label className="label" htmlFor="width">
-            Grid width
-          </label>
-          <input
-            className="input"
-            value={gridWidth}
-            onChange={(event) => setGridWidth(Number(event.target.value))}
-            name="width"
-            type="number"
-          />
-        </div>
-        <div className="column">
-          <label className="label" htmlFor="width">
-            Grid height
-          </label>
-          <input
-            className="input"
-            value={gridHeight}
-            onChange={(event) => setGridHeight(Number(event.target.value))}
-            name="width"
-            type="number"
-          />
-        </div>
-        <button className="btn-primary" type="submit">
-          Change grid size
-        </button>
-      </form>
+      <div className="row mb-2">
+        <form className="row" onSubmit={(e) => handleChangeGridSize(e)}>
+          <div className="column">
+            <label className="label" htmlFor="width">
+              Grid width
+            </label>
+            <input
+              className="input"
+              value={gridWidth}
+              onChange={(event) => setGridWidth(Number(event.target.value))}
+              name="width"
+              type="number"
+            />
+          </div>
+          <div className="column">
+            <label className="label" htmlFor="width">
+              Grid height
+            </label>
+            <input
+              className="input"
+              value={gridHeight}
+              onChange={(event) => setGridHeight(Number(event.target.value))}
+              name="width"
+              type="number"
+            />
+          </div>
+          <button className="btn-primary" type="submit">
+            Change grid size
+          </button>
+        </form>
+      </div>
       {cells.map((row, rowIndex) => (
         <div className="row" key={rowIndex}>
           {row.map((cell, cellIndex) => (
