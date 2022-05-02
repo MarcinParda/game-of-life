@@ -119,7 +119,7 @@ const GameGrid = () => {
           className={isStarted ? 'btn-danger' : 'btn-primary'}
           onClick={() => setIsStarted((prev) => !prev)}
         >
-          {isStarted ? 'Stop' : 'Start'}
+          {isStarted ? 'Stop simulation & draw cells' : 'Start simulation'}
         </button>
         <button className="btn-danger" onClick={clearGrid}>
           Clear grid
